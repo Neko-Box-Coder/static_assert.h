@@ -72,23 +72,23 @@
             #define DGLIB_CONCAT(prefix, suffix)            DGLIB_CONCAT_HELPER(prefix, suffix)
 
 
-            #define static_assert(expr)                                     \
+            #define static_assert(expr, msg)                                \
                 struct DGLIB_CONCAT(__dglib_static_assert_, __COUNTER__)    \
                 {                                                           \
                     char                                                    \
                     dglib_static_assert                                     \
-                    [2*(expr)-1];                                           \
+                    [2*(expr && msg)-1];                                    \
                                                                             \
                 }  DGLIB_CONCAT(__dglib_static_assert_, __COUNTER__)
 
 
         #else /* !defined __COUNTER__ */ /* fall back to inscope_assert */
 
-            #define static_assert(expr)                                     \
+            #define static_assert(expr, msg)                                \
                 {                                                           \
                     char                                                    \
                     dglib_static_assert                                     \
-                    [2*(expr)-1];                                           \
+                    [2*(expr && msg)-1];                                    \
                     (void)dglib_static_assert;                              \
                 }
 
